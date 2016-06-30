@@ -24,6 +24,7 @@ Types are classifications of objects (what Python as an object oriented programm
 For example, adding two integer objects will result in an integer object (int + int = int), whereas adding two string objects will concatenate both strings, resulting in another string object (str + str = str).
 However, adding an integer object to a string object will result in an error:
 TypeError: unsupported operand type(s) for +: 'int' and 'str', as this operation can not be performed on objects of these types.
+Therefore, associated with each data type is a set of operators that expect certain kinds of inputs, in order to "do their job" (given these inputs wil give an output).
 
 ### Type of Objects 
 One can use the built-in function `type()`, to find the type of an object. Object types can be classed into two fundamental categorys :- 
@@ -124,7 +125,8 @@ evaluates to `1.5`.
 **NOTE:-**
 * Division operator `/` on two objects of type `int` returns an object of type `int` (integer division) - not in Python 3.0. If at least one of the operands is a `float`, the expression will also evaluate to an object of type `float`.
 
-* In Python 3.0 use the operator `//` for integer division.
+* In Python 3.0 use the operator `//` for integer division. To compute the remainder of an integer division, use the % operator.
+* When in doubt about operator precedence, just use parentheses.
 
 ### [Overloading](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=861)
 
@@ -137,13 +139,13 @@ returns `"ab"`
 The operator `+` is **overloaded**.  **Overloaded Operators** have a meaning that depends upon the types of operands. The example above displays the concatenation of two strings using the `+` operator.
 
 ### [Type Conversion ](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=961)
-Python does some type checking.
+Python does some type checking, but be disciplined about what kind of operators you apply to what operands (type discipline).
 
 The code below
 ````
 'a' + 3
 ````
-produces a **static semantic error**. The expression is syntactically correct (operand - operator - operand), but it is not meaningful, as one can not concatenate `str` and `int` objects. More precise, the error is a TypeError:
+raises a **static semantic error**. The expression is syntactically correct (operand - operator - operand), but it is not meaningful, as one can not concatenate `str` and `int` objects. More precise, the error is a TypeError:
 
 ````
 >>> 'a' + 3
@@ -190,7 +192,7 @@ In short, a type conversion converts the type of an object from one type into an
 ````
 
 ## [Commands](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=1462)
-**Programs or Scripts**: are sequences of commands, each commands telling the interpreter to do a specific thing.  
+**Programs or Scripts**: are sequences of commands, each command telling the interpreter to do a specific thing.  
 ex:- 
 ````
 print type(5.6)
@@ -199,6 +201,7 @@ print type(5.6)
 ### [Variables](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=1500)
 
 A variable is a name for an object, used to refer to that object (e.g. within code). You can not use Python keywords (words with a special meaning within the programming language) as names.
+Variables can be used any place where it is legal to use the value and inherit their types from their values. Python supports dynamic typing, meaning that the type of an objects can change, depending on what its current value is.
 
 ### [Assignment](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=1495)
 Consider this example: 
@@ -206,9 +209,12 @@ Consider this example:
 ````
 x = 3
 ````
-The above expression is an **assignment** statement, with `x` as a **variable**.
+The above expression is an **assignment** statement, with `x` as a **variable**. A statement is a legal command that Python can interpret.
 
-An **assignment** statement binds a name to an object.
+An **assignment** statement binds a name to an object/value of the subexpression (expression evaluated first, then bind variable name to object with that value).
+
+x = 3*5 //The expression on the right is first evaluated. Then the assignment statement creates a binding or pointer from that variable name to the value that the expression evaluates to (15).
+z = x //Let z be bound to the value of x. First, the interpreter gets the value of x and creates a pointer from z to that same place (to the value, not to x).
 
 ## [Input](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=1682)
 To get an input (e.g. from a keyboard) we use the function `raw_input()`
@@ -230,17 +236,20 @@ The most primitive of such tests is a conditional statement.
 
 ### [Conditional Statement](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=1997)
 Conditional statements are used to control flow of commands executed. A conditional statement starts with an `if` statement and can also include `elif` and `else` statements:
-* `if`
-* `else`
-* `elif` : else if
-
+* `if` <boolean expression>:
+*   indented block of instructions (sequence of commands) executed if expression evaluates to True. A colon ":" defines the beginning
+*   of a block of instructions. A carriage return defines the end.
+* `else`:
+*   Else clause not necessary for conditionals. The Else block is executed if the expression evalutes to False. If there is no Else
+*   clause and the expression evaluates to False, the instructions inside the If clause are simply skipped.
+* `elif` <boolean expression>: else if
 
 ex:-
 
 ````
-if x%2 == 0:
+if x%2 == 0: //A colon ":" defines the beginning of a block of instructions (indented). A carriage return defines the end.
     print "Even"
-else:
+else:        //Else clause not necessary for conditionals
     print "Odd"    
 ````
 The operator `==` is used to do a comparison (NOT assignment operator).
@@ -271,7 +280,7 @@ Indentation is very important in Python. The visual structure follows the semant
 ## [Looping constructs](https://www.youtube.com/watch?v=SLvTCHhu5SE&list=PLB2BE3D6CA77BB8F7#t=2729)
 
 Allow iteration.
-Once we add loops to a programming language, it becomes **Turing Complete** (every program that can be computed can be computed with this programming language). The concept of loops is **iteration**.  
+Once we add loops to a programming language, it becomes **Turing Complete** (every program that can be computed can be computed with this programming language - therefore, anything you can do in one programming language can also be done in practically every other programming language; Turing Comparability). The concept of loops is **iteration**.  
 With loops, we can achieve a more complicated flow of control, as we can execute a statement more than once.
 
 Here is a simple loop:
@@ -280,7 +289,8 @@ Here is a simple loop:
 while ans*ans*ans < abs(x):
     ans = ans + 1
 ````
-
+There are "while" and "for" loops. "While" loops will execute as long as the initial condition is True. Therefore, "while" loops are suitable when one does not know how many iterations will be necessary.
+"For" loops are used to iterate over a finite set of elements (e.g. the elements in a list).
 
 
 
